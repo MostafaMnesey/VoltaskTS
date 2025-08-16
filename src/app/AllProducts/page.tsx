@@ -18,7 +18,7 @@ export default async function AllProducts() {
   const res = await fetch("https://fakestoreapi.com/products", {
     method: "GET",
     // مهم عشان مايكاش البيانات
-    cache: "no-store",
+   cache:"reload" 
   });
 
   const allProducts: IProducts[] = await res.json();
