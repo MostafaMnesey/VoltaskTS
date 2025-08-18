@@ -1,4 +1,6 @@
+
 import Link from "next/link";
+export const revalidate = 60;
 
 interface Product {
   id: number;
@@ -12,26 +14,35 @@ interface Product {
     count: number;
   };
 }
-
-async function getProductDetails(id: string): Promise<Product> {
+export async function getProductDetails(id: string) {
   const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
-    // علشان يعمل revalidate كل 60 ثانية (ISR)
-    next: { revalidate: 60 },
+    method: "GET",
+    next: {
+      revalidate: 120,
+    },
   });
-
-  if (!res.ok) {
-    throw new Error("فشل في جلب البيانات");
-  }
-
   return res.json();
+}
+
+export async function generateStaticParams() {
+  const res = await fetch("https://fakestoreapi.com/products");
+  const products = await res.json();
+
+  return products.map((p: any) => ({
+    id: p.id.toString(),
+    slug: encodeURIComponent(p.title),
+  }));
 }
 
 export default async function ProductDetailsPage({
   params,
 }: {
-  params: { id: string };
+  params: { id: string; slug: string };
 }) {
-  const product = await getProductDetails(params.id);
+const { id, slug } = await params;
+  const product = await getProductDetails(id);
+  console.log(product);
+  
 
   return (
     <div className="bg-white dark:bg-black min-h-screen pt-24">
@@ -74,7 +85,7 @@ export default async function ProductDetailsPage({
                   />
                 </svg>
                 <Link
-                  href="/products"
+                  href="/AllProducts"
                   className="inline-flex items-center text-sm font-medium text-black dark:text-white hover:text-main dark:hover:text-main transition-all duration-300"
                 >
                   All Products

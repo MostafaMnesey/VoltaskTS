@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "./_Card/Card";
+export const relative = 60;
 
 export interface IProducts {
   id: number;
@@ -12,16 +13,19 @@ export interface IProducts {
     count: number;
   };
 }
-
-export default async function AllProducts() {
-  // Fetch products مباشرة
+async function getProducts() {
   const res = await fetch("https://fakestoreapi.com/products", {
     method: "GET",
-    // مهم عشان مايكاش البيانات
-   cache:"reload" 
+    next: {
+      revalidate: 120,
+    },
   });
+  return res.json();
+}
+export default async function AllProducts() {
+  // Fetch products مباشرة
 
-  const allProducts: IProducts[] = await res.json();
+  const allProducts: IProducts[] = await getProducts();
 
   return (
     <div className="bg-black  min-h-screen">
