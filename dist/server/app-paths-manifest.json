@@ -1,0 +1,5 @@
+{
+  "/AllProducts/[id]/page": "app/AllProducts/[id]/page.js",
+  "/AllProducts/page": "app/AllProducts/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
+}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import { IProducts } from "../page";
+import Image from "next/image";
 
 interface props {
   product: IProducts;
@@ -10,10 +11,12 @@ export default function Card({ product }: props) {
     <div className="max-w-sm  bg-white h-[110%] group/btn relative overflow-hidden  rounded-lg dark:bg-black ">
       <a href="#">
         <div className="relative">
-          <img
+          <Image
             className="rounded-t-lg r h-52 flex justify-center items-center w-full"
             src={product?.image}
             alt="product image"
+            width={500}
+            height={500}
           />
           <span className="bg-main absolute top-[100%] left-[50%] -translate-x-1/2 text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-main dark:text-white">
             {product?.category}
@@ -31,7 +34,8 @@ export default function Card({ product }: props) {
           far, in reverse chronological order.
         </p>
         <Link
-          href={`/AllProducts/${product?.id}/${encodeURIComponent(product?.title)}`}
+          href={`/AllProducts/${product?.id}
+          `}
           className="inline-flex absolute z-10 -top-[200%] group-hover/btn:top-[2%] mt-2 transition-all right-[1%] items-center px-3 py-2 text-sm font-medium text-center text-white bg-main rounded-full hover:bg-main/80 focus:ring-4-main focus:outline-none focus:ring-bg-main dark:bg-bg-main dark:hover:bg-bg-main/80 dark:focus:ring-bg-main"
         >
           Show Details

@@ -2,7 +2,7 @@
 import * as Yup from "yup";
 import React from "react";
 import { genralFeilds } from "../../../_utils/genralFeilds";
-import Joi from "joi";
+
 import { useFormik } from "formik";
 import { ISignUp, ISignIn } from "../../_interfaces/Auth.types";
 import toast, { Toaster } from "react-hot-toast";
@@ -12,16 +12,15 @@ type props = {
   pathname: string;
 };
 
-
 export default function Form({ pathname }: props) {
   const router = useRouter();
   let validationSchema;
-  let initialValues: ISignUp | ISignIn;
+
   console.log(pathname);
 
   const isRegister: boolean = pathname !== "/signin";
 
-  initialValues = isRegister
+  const initialValues: ISignUp | ISignIn = isRegister
     ? {
         email: "",
         password: "",
@@ -54,7 +53,7 @@ export default function Form({ pathname }: props) {
     initialValues,
 
     validationSchema: validationSchema,
-    validate: (values) => {},
+ 
     onSubmit: (values: ISignUp | ISignIn) => {
       console.log(values);
 
@@ -103,7 +102,7 @@ export default function Form({ pathname }: props) {
               toast.success(data.message);
               localStorage.setItem("token", data?.data.accessToken);
               setTimeout(() => {
-                router.push("/AllProducts")
+                router.push("/AllProducts");
               }, 1000);
             }
 
